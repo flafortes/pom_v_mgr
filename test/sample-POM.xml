@@ -1,401 +1,397 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<ns0:project xmlns:ns0="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<ns0:modelVersion>4.0.0</ns0:modelVersion>
 
-	<groupId>da101730</groupId>
-	<artifactId>ops-tools</artifactId>
-	<version>1.0.20-RC.1</version>
-	<packaging>mule-application</packaging>
+	<ns0:groupId>da101730</ns0:groupId>
+	<ns0:artifactId>ops-tools</ns0:artifactId>
+	<ns0:version>1.0.8-SNAPSHOT</ns0:version>
+	<ns0:packaging>mule-application</ns0:packaging>
 
-	<name>ops-tools</name>
+	<ns0:name>ops-tools</ns0:name>
 
-	<description>Mule DevOps Tools</description>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	<ns0:description>Mule DevOps Tools</ns0:description>
+	<ns0:properties>
+		<ns0:project.build.sourceEncoding>UTF-8</ns0:project.build.sourceEncoding>
+		<ns0:project.reporting.outputEncoding>UTF-8</ns0:project.reporting.outputEncoding>
 
-		<app.runtime>4.4.0</app.runtime>
-		<mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
-		<!-- Change this if needed -->
-		<version.major>v1</version.major>
-		<!-- CloudHub Parameters -->
-		<credentials.mode>client_credentials</credentials.mode>
-		<apply.runtimePatch>false</apply.runtimePatch>
-		<!-- SKip the verification if the deployment is successful -->
-		<deployment.verification.skip>false</deployment.verification.skip>
-		<!-- Anypoint Visualizer properties -->
-		<visualizer.layer>Experience</visualizer.layer>
-		<!--Change to: Experience, Process or System -->
-		<visualizer.project>toBeChanged</visualizer.project>
-		<!-- The name of project using this API -->
-		<visualizer.functionalflow>toBeChanged</visualizer.functionalflow>
-		<!-- The functional flows this belongs to -->
-		<!-- If multiple projects or functionalflows: use comma separated values -->
-		<!-- <visualizer.project>project1, project2, ...</visualizer.project> -->
-		<tags>template,cloudhub</tags>
-		<categories>[]</categories>
-		<fields>[]</fields>
-		<munit.version>2.3.11</munit.version>
-	</properties>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.0.0</version>
-			</plugin>
-			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<version>${mule.maven.plugin.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<sharedLibraries>
-						<sharedLibrary>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-context</artifactId>
-						</sharedLibrary>
-						<sharedLibrary>
-							<groupId>org.springframework.security</groupId>
-							<artifactId>spring-security-config</artifactId>
-						</sharedLibrary>
-						<sharedLibrary>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-beans</artifactId>
-						</sharedLibrary>
-						<sharedLibrary>
-							<groupId>org.springframework.security</groupId>
-							<artifactId>spring-security-crypto</artifactId>
-						</sharedLibrary>
-						<sharedLibrary>
-							<groupId>org.springframework.security</groupId>
-							<artifactId>spring-security-core</artifactId>
-						</sharedLibrary>
-						<sharedLibrary>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-core</artifactId>
-						</sharedLibrary>
-					</sharedLibraries>
-
-					<!-- Configuration for CloudHub Deployment All variables for deployment 
-						are defined on DevOps pipeline -->
-
-					<cloudHubDeployment>
-
-						<uri>${anypoint.platform.uri}</uri>
-						<muleVersion>${app.runtime}</muleVersion>
-						<connectedAppClientId>${anypoint.deploy.app.client.id}</connectedAppClientId>
-						<connectedAppClientSecret>${anypoint.deploy.app.client.secret}</connectedAppClientSecret>
-						<connectedAppGrantType>${credentials.mode}</connectedAppGrantType>
-						<applicationName>${project.artifactId}-${version.major}${mule.nameSuffix}</applicationName>
-						<region>${aws.region}</region>
-						<workers>${workers.number}</workers>
-						<workerType>${worker.size}</workerType>
-						<environment>${anypoint.environment}</environment>
-						<objectStoreV2>${objectStoreV2}</objectStoreV2>
-						<!-- Necessity to enable objectStoreV2 for the application, To put 
-							in parameter -->
-						<persistentQueues>${persistentQueues}</persistentQueues>
-						<!-- Necessity to enable persistency queue for the application, To 
-							put in parameter -->
-						<skipDeploymentVerification>${deployment.verification.skip}</skipDeploymentVerification>
-						<!-- Parameter to skip the validation of deployment -->
-						<applyLatestRuntimePatch>${apply.runtimePatch}</applyLatestRuntimePatch>
-						<!-- Automatically apply the latest runtime patches -->
-
-						<!-- Definition of properties to be defined at Runtime level Properties -->
-						<properties>
-							<mule.env>${env}</mule.env>
-							<mule.encryptionKey>${mule.key}</mule.encryptionKey>
-							<anypoint.platform.client_id>${anypoint.platform.client_id}</anypoint.platform.client_id>
-							<anypoint.platform.client_secret>${anypoint.platform.client_secret}</anypoint.platform.client_secret>
-							<anypoint.platform.analytics_base_uri>${anypoint.platform.analytics}</anypoint.platform.analytics_base_uri>
-							<anypoint.platform.config.analytics.agent.enabled>${anypoint.platform.config.analytics.agent.enabled}</anypoint.platform.config.analytics.agent.enabled>
-
-							<splunk.url>${splunk.url}</splunk.url>
-							<splunk.token>${splunk.token}</splunk.token>
-							<splunk.index>${splunk.index}</splunk.index>
-							<splunk.sourcetype>${splunk.sourcetype}</splunk.sourcetype>
-							<application.name>${project.artifactId}</application.name>
-							<autodiscovery.id>${autodiscovery.id}</autodiscovery.id>
-							<!-- Anypoint Visualizer properties -->
-							<anypoint.platform.visualizer.layer>
-								${visualizer.layer}
-							</anypoint.platform.visualizer.layer>
-							<anypoint.platform.visualizer.tags>
-								${visualizer.project}, ${visualizer.functionalflow}
-							</anypoint.platform.visualizer.tags>
-						</properties>
-					</cloudHubDeployment>
-					<classifier>mule-application</classifier>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.1</version>
-				<configuration>
-					<compilerArgs>
-						<args>-parameters</args>
-					</compilerArgs>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.mulesoft.munit.tools</groupId>
-				<artifactId>munit-maven-plugin</artifactId>
-				<version>${munit.version}</version>
-				<executions>
-					<execution>
-						<id>test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>test</goal>
-							<goal>coverage-report</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<coverage>
-						<runCoverage>true</runCoverage>
-						<formats>
-							<format>html</format>
-						</formats>
-					</coverage>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.owasp</groupId>
-				<artifactId>dependency-check-maven</artifactId>
-				<version>8.2.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
-	<dependencies>
-		<!-- Module for secure configuration -->
-
-		<!-- Following dependencies are needed for the Splunk & Cloudhub logging -->
-		<dependency>
-			<groupId>com.splunk.logging</groupId>
-			<artifactId>splunk-library-javalogging</artifactId>
-			<version>1.11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.12.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.12.1</version>
-		</dependency>
-		<!-- HTTP connector -->
-		<!-- Json logger module -->
-		<dependency>
-			<groupId>da101730</groupId>
-			<artifactId>json-logger</artifactId>
-			<version>2.0.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<!-- Module for anypoint MQ -->
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-module-file-extension-common</artifactId>
-			<version>1.3.6</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>da101730</groupId>
-			<artifactId>healthcheck</artifactId>
-			<version>1.0.0</version>
-			<classifier>raml</classifier>
-			<type>zip</type>
-		</dependency>
-		<dependency>
-			<groupId>da101730</groupId>
-			<artifactId>sib-ops-tools-api</artifactId>
-			<version>1.0.0</version>
-			<classifier>raml</classifier>
-			<type>zip</type>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-spring-module</artifactId>
-			<version>1.2.0</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>5.3.22</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>4.2.6.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>5.3.22</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-crypto</artifactId>
-			<version>4.2.6.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>4.2.6.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>5.3.22</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-scripting-module</artifactId>
-			<version>2.0.3</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.module</groupId>
-			<artifactId>mule-java-module</artifactId>
-			<version>1.2.10</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-http-connector</artifactId>
-			<version>1.7.3</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.munit</groupId>
-			<artifactId>munit-runner</artifactId>
-			<version>2.3.11</version>
-			<classifier>mule-plugin</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.munit</groupId>
-			<artifactId>munit-tools</artifactId>
-			<version>2.3.11</version>
-			<classifier>mule-plugin</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.weave</groupId>
-			<artifactId>assertions</artifactId>
-			<version>1.0.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.connectors</groupId>
-			<artifactId>mule-amqp-connector</artifactId>
-			<version>1.7.4</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-apikit-module</artifactId>
-			<version>1.8.2</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.connectors</groupId>
-			<artifactId>anypoint-mq-connector</artifactId>
-			<version>4.0.2</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-ftp-connector</artifactId>
-			<version>1.8.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.connectors</groupId>
-			<artifactId>mule-ftps-connector</artifactId>
-			<version>1.8.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-jms-connector</artifactId>
-			<version>1.8.7</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-sftp-connector</artifactId>
-			<version>1.6.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.modules</groupId>
-			<artifactId>mule-secure-configuration-property-module</artifactId>
-			<version>1.2.5</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-sockets-connector</artifactId>
-			<version>1.2.3</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>anypoint-exchange-v2</id>
-			<name>Anypoint Exchange</name>
-			<url>https://maven.eu1.anypoint.mulesoft.com/api/v2/maven</url>
-			<layout>default</layout>
-		</repository>
-		<repository>
-			<id>mulesoft-releases</id>
-			<name>MuleSoft Releases Repository</name>
-			<url>https://repository.mulesoft.org/releases/</url>
-			<layout>default</layout>
-		</repository>
+		<ns0:app.runtime>4.4.0</ns0:app.runtime>
+		<ns0:mule.maven.plugin.version>3.8.2</ns0:mule.maven.plugin.version>
 		
-		<!-- Splunk logging -->
-		<repository>
-			<id>splunk-artifactory</id>
-			<name>Splunk Releases</name>
-			<url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
-		</repository>
-		<repository>
-			<id>anypoint-exchange-v3</id>
-			<name>Anypoint Exchange V3</name>
-			<url>https://maven.eu1.anypoint.mulesoft.com/api/v3/maven</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
+		<ns0:version.major>v1</ns0:version.major>
+		
+		<ns0:credentials.mode>client_credentials</ns0:credentials.mode>
+		<ns0:apply.runtimePatch>false</ns0:apply.runtimePatch>
+		
+		<ns0:deployment.verification.skip>false</ns0:deployment.verification.skip>
+		
+		<ns0:visualizer.layer>Experience</ns0:visualizer.layer>
+		
+		<ns0:visualizer.project>toBeChanged</ns0:visualizer.project>
+		
+		<ns0:visualizer.functionalflow>toBeChanged</ns0:visualizer.functionalflow>
+		
+		
+		
+		<ns0:tags>template,cloudhub</ns0:tags>
+		<ns0:categories>[]</ns0:categories>
+		<ns0:fields>[]</ns0:fields>
+		<ns0:munit.version>2.3.11</ns0:munit.version>
+	</ns0:properties>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>mulesoft-releases</id>
-			<name>MuleSoft Releases Repository</name>
-			<layout>default</layout>
-			<url>https://repository.mulesoft.org/releases/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
+	<ns0:build>
+		<ns0:plugins>
+			<ns0:plugin>
+				<ns0:groupId>org.apache.maven.plugins</ns0:groupId>
+				<ns0:artifactId>maven-clean-plugin</ns0:artifactId>
+				<ns0:version>3.0.0</ns0:version>
+			</ns0:plugin>
+			<ns0:plugin>
+				<ns0:groupId>org.mule.tools.maven</ns0:groupId>
+				<ns0:artifactId>mule-maven-plugin</ns0:artifactId>
+				<ns0:version>${mule.maven.plugin.version}</ns0:version>
+				<ns0:extensions>true</ns0:extensions>
+				<ns0:configuration>
+					<ns0:sharedLibraries>
+						<ns0:sharedLibrary>
+							<ns0:groupId>org.springframework</ns0:groupId>
+							<ns0:artifactId>spring-context</ns0:artifactId>
+						</ns0:sharedLibrary>
+						<ns0:sharedLibrary>
+							<ns0:groupId>org.springframework.security</ns0:groupId>
+							<ns0:artifactId>spring-security-config</ns0:artifactId>
+						</ns0:sharedLibrary>
+						<ns0:sharedLibrary>
+							<ns0:groupId>org.springframework</ns0:groupId>
+							<ns0:artifactId>spring-beans</ns0:artifactId>
+						</ns0:sharedLibrary>
+						<ns0:sharedLibrary>
+							<ns0:groupId>org.springframework.security</ns0:groupId>
+							<ns0:artifactId>spring-security-crypto</ns0:artifactId>
+						</ns0:sharedLibrary>
+						<ns0:sharedLibrary>
+							<ns0:groupId>org.springframework.security</ns0:groupId>
+							<ns0:artifactId>spring-security-core</ns0:artifactId>
+						</ns0:sharedLibrary>
+						<ns0:sharedLibrary>
+							<ns0:groupId>org.springframework</ns0:groupId>
+							<ns0:artifactId>spring-core</ns0:artifactId>
+						</ns0:sharedLibrary>
+					</ns0:sharedLibraries>
 
-</project>
+					
+
+					<ns0:cloudHubDeployment>
+
+						<ns0:uri>${anypoint.platform.uri}</ns0:uri>
+						<ns0:muleVersion>${app.runtime}</ns0:muleVersion>
+						<ns0:connectedAppClientId>${anypoint.deploy.app.client.id}</ns0:connectedAppClientId>
+						<ns0:connectedAppClientSecret>${anypoint.deploy.app.client.secret}</ns0:connectedAppClientSecret>
+						<ns0:connectedAppGrantType>${credentials.mode}</ns0:connectedAppGrantType>
+						<ns0:applicationName>${project.artifactId}-${version.major}${mule.nameSuffix}</ns0:applicationName>
+						<ns0:region>${aws.region}</ns0:region>
+						<ns0:workers>${workers.number}</ns0:workers>
+						<ns0:workerType>${worker.size}</ns0:workerType>
+						<ns0:environment>${anypoint.environment}</ns0:environment>
+						<ns0:objectStoreV2>${objectStoreV2}</ns0:objectStoreV2>
+						
+						<ns0:persistentQueues>${persistentQueues}</ns0:persistentQueues>
+						
+						<ns0:skipDeploymentVerification>${deployment.verification.skip}</ns0:skipDeploymentVerification>
+						
+						<ns0:applyLatestRuntimePatch>${apply.runtimePatch}</ns0:applyLatestRuntimePatch>
+						
+
+						
+						<ns0:properties>
+							<ns0:mule.env>${env}</ns0:mule.env>
+							<ns0:mule.encryptionKey>${mule.key}</ns0:mule.encryptionKey>
+							<ns0:anypoint.platform.client_id>${anypoint.platform.client_id}</ns0:anypoint.platform.client_id>
+							<ns0:anypoint.platform.client_secret>${anypoint.platform.client_secret}</ns0:anypoint.platform.client_secret>
+							<ns0:anypoint.platform.analytics_base_uri>${anypoint.platform.analytics}</ns0:anypoint.platform.analytics_base_uri>
+							<ns0:anypoint.platform.config.analytics.agent.enabled>${anypoint.platform.config.analytics.agent.enabled}</ns0:anypoint.platform.config.analytics.agent.enabled>
+
+							<ns0:splunk.url>${splunk.url}</ns0:splunk.url>
+							<ns0:splunk.token>${splunk.token}</ns0:splunk.token>
+							<ns0:splunk.index>${splunk.index}</ns0:splunk.index>
+							<ns0:splunk.sourcetype>${splunk.sourcetype}</ns0:splunk.sourcetype>
+							<ns0:application.name>${project.artifactId}</ns0:application.name>
+							<ns0:autodiscovery.id>${autodiscovery.id}</ns0:autodiscovery.id>
+							
+							<ns0:anypoint.platform.visualizer.layer>
+								${visualizer.layer}
+							</ns0:anypoint.platform.visualizer.layer>
+							<ns0:anypoint.platform.visualizer.tags>
+								${visualizer.project}, ${visualizer.functionalflow}
+							</ns0:anypoint.platform.visualizer.tags>
+						</ns0:properties>
+					</ns0:cloudHubDeployment>
+					<ns0:classifier>mule-application</ns0:classifier>
+				</ns0:configuration>
+			</ns0:plugin>
+			<ns0:plugin>
+				<ns0:groupId>org.apache.maven.plugins</ns0:groupId>
+				<ns0:artifactId>maven-compiler-plugin</ns0:artifactId>
+				<ns0:version>3.10.1</ns0:version>
+				<ns0:configuration>
+					<ns0:compilerArgs>
+						<ns0:args>-parameters</ns0:args>
+					</ns0:compilerArgs>
+					<ns0:target>1.8</ns0:target>
+				</ns0:configuration>
+			</ns0:plugin>
+			<ns0:plugin>
+				<ns0:groupId>com.mulesoft.munit.tools</ns0:groupId>
+				<ns0:artifactId>munit-maven-plugin</ns0:artifactId>
+				<ns0:version>${munit.version}</ns0:version>
+				<ns0:executions>
+					<ns0:execution>
+						<ns0:id>test</ns0:id>
+						<ns0:phase>test</ns0:phase>
+						<ns0:goals>
+							<ns0:goal>test</ns0:goal>
+							<ns0:goal>coverage-report</ns0:goal>
+						</ns0:goals>
+					</ns0:execution>
+				</ns0:executions>
+				<ns0:configuration>
+					<ns0:coverage>
+						<ns0:runCoverage>true</ns0:runCoverage>
+						<ns0:formats>
+							<ns0:format>html</ns0:format>
+						</ns0:formats>
+					</ns0:coverage>
+				</ns0:configuration>
+			</ns0:plugin>
+			<ns0:plugin>
+				<ns0:groupId>org.owasp</ns0:groupId>
+				<ns0:artifactId>dependency-check-maven</ns0:artifactId>
+				<ns0:version>8.2.1</ns0:version>
+				<ns0:executions>
+					<ns0:execution>
+						<ns0:goals>
+							<ns0:goal>check</ns0:goal>
+						</ns0:goals>
+					</ns0:execution>
+				</ns0:executions>
+			</ns0:plugin>
+		</ns0:plugins>
+	</ns0:build>
+
+	<ns0:dependencies>
+		
+
+		
+		<ns0:dependency>
+			<ns0:groupId>com.splunk.logging</ns0:groupId>
+			<ns0:artifactId>splunk-library-javalogging</ns0:artifactId>
+			<ns0:version>1.11.0</ns0:version>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.apache.logging.log4j</ns0:groupId>
+			<ns0:artifactId>log4j-core</ns0:artifactId>
+			<ns0:version>2.12.1</ns0:version>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.apache.logging.log4j</ns0:groupId>
+			<ns0:artifactId>log4j-api</ns0:artifactId>
+			<ns0:version>2.12.1</ns0:version>
+		</ns0:dependency>
+		
+		
+		<ns0:dependency>
+			<ns0:groupId>da101730</ns0:groupId>
+			<ns0:artifactId>json-logger</ns0:artifactId>
+			<ns0:version>2.0.1</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		
+		<ns0:dependency>
+			<ns0:groupId>org.mule.modules</ns0:groupId>
+			<ns0:artifactId>mule-module-file-extension-common</ns0:artifactId>
+			<ns0:version>1.3.6</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>da101730</ns0:groupId>
+			<ns0:artifactId>healthcheck</ns0:artifactId>
+			<ns0:version>1.0.0</ns0:version>
+			<ns0:classifier>raml</ns0:classifier>
+			<ns0:type>zip</ns0:type>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>da101730</ns0:groupId>
+			<ns0:artifactId>sib-ops-tools-api</ns0:artifactId>
+			<ns0:version>1.0.0</ns0:version>
+			<ns0:classifier>raml</ns0:classifier>
+			<ns0:type>zip</ns0:type>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.modules</ns0:groupId>
+			<ns0:artifactId>mule-spring-module</ns0:artifactId>
+			<ns0:version>1.2.0</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.springframework</ns0:groupId>
+			<ns0:artifactId>spring-context</ns0:artifactId>
+			<ns0:version>5.3.22</ns0:version>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.springframework.security</ns0:groupId>
+			<ns0:artifactId>spring-security-config</ns0:artifactId>
+			<ns0:version>4.2.6.RELEASE</ns0:version>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.springframework</ns0:groupId>
+			<ns0:artifactId>spring-beans</ns0:artifactId>
+			<ns0:version>5.3.22</ns0:version>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.springframework.security</ns0:groupId>
+			<ns0:artifactId>spring-security-crypto</ns0:artifactId>
+			<ns0:version>4.2.6.RELEASE</ns0:version>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.springframework.security</ns0:groupId>
+			<ns0:artifactId>spring-security-core</ns0:artifactId>
+			<ns0:version>4.2.6.RELEASE</ns0:version>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.springframework</ns0:groupId>
+			<ns0:artifactId>spring-core</ns0:artifactId>
+			<ns0:version>5.3.22</ns0:version>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.modules</ns0:groupId>
+			<ns0:artifactId>mule-scripting-module</ns0:artifactId>
+			<ns0:version>2.0.3</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.module</ns0:groupId>
+			<ns0:artifactId>mule-java-module</ns0:artifactId>
+			<ns0:version>1.2.10</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.connectors</ns0:groupId>
+			<ns0:artifactId>mule-http-connector</ns0:artifactId>
+			<ns0:version>1.7.3</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>com.mulesoft.munit</ns0:groupId>
+			<ns0:artifactId>munit-runner</ns0:artifactId>
+			<ns0:version>2.3.11</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+			<ns0:scope>test</ns0:scope>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>com.mulesoft.munit</ns0:groupId>
+			<ns0:artifactId>munit-tools</ns0:artifactId>
+			<ns0:version>2.3.11</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+			<ns0:scope>test</ns0:scope>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.weave</ns0:groupId>
+			<ns0:artifactId>assertions</ns0:artifactId>
+			<ns0:version>1.0.2</ns0:version>
+			<ns0:scope>test</ns0:scope>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>com.mulesoft.connectors</ns0:groupId>
+			<ns0:artifactId>mule-amqp-connector</ns0:artifactId>
+			<ns0:version>1.7.4</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.modules</ns0:groupId>
+			<ns0:artifactId>mule-apikit-module</ns0:artifactId>
+			<ns0:version>1.8.2</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>com.mulesoft.connectors</ns0:groupId>
+			<ns0:artifactId>anypoint-mq-connector</ns0:artifactId>
+			<ns0:version>4.0.2</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.connectors</ns0:groupId>
+			<ns0:artifactId>mule-ftp-connector</ns0:artifactId>
+			<ns0:version>1.8.1</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>com.mulesoft.connectors</ns0:groupId>
+			<ns0:artifactId>mule-ftps-connector</ns0:artifactId>
+			<ns0:version>1.8.1</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.connectors</ns0:groupId>
+			<ns0:artifactId>mule-jms-connector</ns0:artifactId>
+			<ns0:version>1.8.7</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.connectors</ns0:groupId>
+			<ns0:artifactId>mule-sftp-connector</ns0:artifactId>
+			<ns0:version>1.6.1</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>com.mulesoft.modules</ns0:groupId>
+			<ns0:artifactId>mule-secure-configuration-property-module</ns0:artifactId>
+			<ns0:version>1.2.5</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+		<ns0:dependency>
+			<ns0:groupId>org.mule.connectors</ns0:groupId>
+			<ns0:artifactId>mule-sockets-connector</ns0:artifactId>
+			<ns0:version>1.2.3</ns0:version>
+			<ns0:classifier>mule-plugin</ns0:classifier>
+		</ns0:dependency>
+	</ns0:dependencies>
+
+	<ns0:repositories>
+		<ns0:repository>
+			<ns0:id>anypoint-exchange-v2</ns0:id>
+			<ns0:name>Anypoint Exchange</ns0:name>
+			<ns0:url>https://maven.eu1.anypoint.mulesoft.com/api/v2/maven</ns0:url>
+			<ns0:layout>default</ns0:layout>
+		</ns0:repository>
+		<ns0:repository>
+			<ns0:id>mulesoft-releases</ns0:id>
+			<ns0:name>MuleSoft Releases Repository</ns0:name>
+			<ns0:url>https://repository.mulesoft.org/releases/</ns0:url>
+			<ns0:layout>default</ns0:layout>
+		</ns0:repository>
+		
+		
+		<ns0:repository>
+			<ns0:id>splunk-artifactory</ns0:id>
+			<ns0:name>Splunk Releases</ns0:name>
+			<ns0:url>https://splunk.jfrog.io/splunk/ext-releases-local</ns0:url>
+		</ns0:repository>
+		<ns0:repository>
+			<ns0:id>anypoint-exchange-v3</ns0:id>
+			<ns0:name>Anypoint Exchange V3</ns0:name>
+			<ns0:url>https://maven.eu1.anypoint.mulesoft.com/api/v3/maven</ns0:url>
+			<ns0:layout>default</ns0:layout>
+		</ns0:repository>
+	</ns0:repositories>
+
+	<ns0:pluginRepositories>
+		<ns0:pluginRepository>
+			<ns0:id>mulesoft-releases</ns0:id>
+			<ns0:name>MuleSoft Releases Repository</ns0:name>
+			<ns0:layout>default</ns0:layout>
+			<ns0:url>https://repository.mulesoft.org/releases/</ns0:url>
+			<ns0:snapshots>
+				<ns0:enabled>false</ns0:enabled>
+			</ns0:snapshots>
+		</ns0:pluginRepository>
+	</ns0:pluginRepositories>
+
+</ns0:project>
